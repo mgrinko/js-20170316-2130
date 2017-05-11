@@ -167,6 +167,22 @@ class PhoneCatalogue {
     this._render(this._getPhones());
   }
 
+  on(eventName, handler) {
+    this._el.addEventListener(eventName, handler);
+  }
+
+  off(eventName, handler) {
+    this._el.removeEventListener(eventName, handler);
+  }
+
+  trigger(eventName, data) {
+    var myEvent = new CustomEvent(eventName, {
+      detail: data
+    });
+
+    this._el.dispatchEvent(myEvent);
+  }
+
   _onPhoneClick(event) {
     let phoneLink = event.target.closest('[data-element="phone-link"]');
 
@@ -177,11 +193,7 @@ class PhoneCatalogue {
     let phoneItemElement = phoneLink.closest('[data-element="phone-item"]');
     let selectedPhoneId = phoneItemElement.dataset.phoneId;
 
-    var myEvent = new CustomEvent('phoneSelected', {
-      detail: selectedPhoneId
-    });
-
-    this._el.dispatchEvent(myEvent);
+    this.trigger('phoneSelected', selectedPhoneId);
   }
 
   _render(phones) {
