@@ -160,14 +160,14 @@ let phonesFromServer = [
 class PhoneCatalogue {
   constructor(options) {
     this._el = options.el;
+    this._cart = options.cart;
 
-    this._el.addEventListener('click', this._onPhoneClick);
+    this._el.addEventListener('click', this._onPhoneClick.bind(this));
 
     this._render(this._getPhones());
   }
 
   _onPhoneClick(event) {
-
     let phoneLink = event.target.closest('[data-element="phone-link"]');
 
     if (!phoneLink) {
@@ -177,6 +177,11 @@ class PhoneCatalogue {
     let phoneItemElement = phoneLink.closest('[data-element="phone-item"]');
     let selectedPhoneId = phoneItemElement.dataset.phoneId;
 
+    var myEvent = new CustomEvent('phoneSelected', {
+      detail: selectedPhoneId
+    });
+
+    this._el.dispatchEvent(myEvent);
   }
 
   _render(phones) {
