@@ -19,6 +19,7 @@ class ShoppingCart {
 
   render() {
     let html = this._templateFunction({
+      title: 'My shopping cart',
       items: this._items
     });
 
