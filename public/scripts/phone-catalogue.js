@@ -161,7 +161,19 @@ class PhoneCatalogue {
   constructor(options) {
     this._el = options.el;
 
-    this._render(this._getPhones())
+    this._el.addEventListener('click', this._onPhoneClick);
+
+    this._render(this._getPhones());
+  }
+
+  _onPhoneClick(event) {
+    let phoneItemElement = event.target.closest('[data-element="phone-item"]');
+
+    if (!phoneItemElement) {
+      return;
+    }
+
+    alert(phoneItemElement.dataset.phoneId);
   }
 
   _render(phones) {
@@ -177,7 +189,7 @@ class PhoneCatalogue {
 
     phones.forEach((phone) => {
       html += `
-        <li class="thumbnail">
+        <li class="thumbnail" data-element="phone-item" data-phone-id="${phone.id}">
           <a href="#!/phones/${phone.id}" class="thumb">
             <img alt="${phone.name}" src="${phone.imageUrl}">
           </a>
