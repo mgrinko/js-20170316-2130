@@ -3,6 +3,8 @@
 class ShoppingCart {
   constructor(options) {
     this._el = options.el;
+    this._template = document.querySelector('#shopping-cart-template').innerHTML;
+    this._templateFunction = _.template(this._template);
 
     this._items = [];
 
@@ -16,21 +18,9 @@ class ShoppingCart {
   }
 
   render() {
-    let html = '';
-
-    html += `<h4>Shopping cart </h4>`;
-
-    if (this._items.length) {
-      html += '<ul>';
-
-      this._items.forEach(item => {
-        html += `<li>${ item.id }</li>`
-      });
-
-      html += '</ul>';
-    } else {
-      html += '<p>No items yet!</p>';
-    }
+    let html = this._templateFunction({
+      items: this._items
+    });
 
     this._el.innerHTML = html;
   }
