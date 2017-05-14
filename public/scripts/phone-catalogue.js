@@ -208,4 +208,12 @@ class PhoneCatalogue {
   _getPhones() {
     return phonesFromServer;
   }
+
+  show() {
+    this._el.classList.remove('js-hidden');
+  }
+
+  hide() {
+    this._el.classList.add('js-hidden');
+  }
 }

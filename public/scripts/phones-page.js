@@ -12,7 +12,20 @@ class PhonesPage {
       el: this._el.querySelector('[data-component="phone-catalogue"]'),
     });
 
+    this._viewer = new PhoneViewer({
+      el: this._el.querySelector('[data-component="phone-viewer"]'),
+    });
+
     this._catalogue.on('phoneSelected', (event) => {
+      this._catalogue.hide();
+      this._viewer.showPhone(event.detail);
+    });
+
+    this._viewer.on('hidePhoneViewer', (event) => {
+      this._catalogue.show();
+    });
+
+    this._viewer.on('phoneSelected', (event) => {
       this._cart.addItem({ id: event.detail });
     });
   }
