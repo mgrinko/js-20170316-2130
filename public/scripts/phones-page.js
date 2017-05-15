@@ -32,21 +32,10 @@ class PhonesPage {
 
   _onPhoneSelected(event) {
     let phoneId = event.detail;
-    let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', `/data/phones/${phoneId}.json`, true);
-
-    xhr.send();
-
-    xhr.onload = () => {
-      if (xhr.status !== 200) {
-        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
-      } else {
-        let phoneDetails = JSON.parse(xhr.responseText);
-
-        this._viewer.showPhone(phoneDetails);
-        this._catalogue.hide();
-      }
-    };
+    HttpService.getJSON(`/data/phones/${phoneId}.json`, (phoneDetails) => {
+      this._viewer.showPhone(phoneDetails);
+      this._catalogue.hide();
+    });
   }
 }

@@ -167,7 +167,7 @@ class PhoneCatalogue extends Component {
 
     this._el.addEventListener('click', this._onPhoneClick.bind(this));
 
-    this._render(this._getPhones());
+    this._loadPhones();
   }
 
   _onPhoneClick(event) {
@@ -183,15 +183,18 @@ class PhoneCatalogue extends Component {
     this.trigger('phoneSelected', selectedPhoneId);
   }
 
-  _render(phones) {
+  _render() {
     let html = this._templateFunction({
-      phones: phones
+      phones: this._phones
     });
 
     this._el.innerHTML = html;
   }
 
-  _getPhones() {
-    return phonesFromServer;
+  _loadPhones() {
+    HttpService.getJSON(`/data/phones/phones.json`, (phones) => {
+      this._phones = phones;
+      this._render();
+    });
   }
 }
