@@ -8,14 +8,15 @@
   <script src="scripts/phone-catalogue.js" defer></script>
   <script src="scripts/phones-page.js" defer></script>
   <script src="scripts/shopping-cart.js" defer></script>
+  <script src="scripts/phone-viewer.js" defer></script>
   <script src="scripts/app.js" defer></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="app.css">
+
+
 </head>
 <body>
-
-<header></header>
 
 <div data-component="phones-page">
   <div>
@@ -47,7 +48,7 @@
         <div class="col-md-10">
           <!--Body content-->
 
-          <div data-component="phone-viewer" class="js-hidden">1234123</div>
+          <div data-component="phone-viewer" class="js-hidden"></div>
 
           <div data-component="phone-catalogue"></div>
 
@@ -89,8 +90,6 @@
   </ul>
 </script>
 
-
-
 <script type="text/template" id="phone-catalogue-template">
   <ul class="phones">
 
@@ -103,10 +102,12 @@
            class="thumb"
            data-element="phone-link">
 
-          <img alt="<%= phone.name %>" src="<%= phone.imageUrl %>">
+          <img alt="<%= phone.name %>"
+               src="<%= phone.imageUrl %>">
         </a>
 
-        <a href="#!/phones/<%= phone.id %>" data-element="phone-link">
+        <a href="#!/phones/<%= phone.id %>"
+           data-element="phone-link">
           <%= phone.name %>
         </a>
 
