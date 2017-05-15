@@ -157,31 +157,17 @@ let phonesFromServer = [
 ];
 
 
-class PhoneCatalogue {
+class PhoneCatalogue extends Component {
   constructor(options) {
+    super(options.el);
+
     this._el = options.el;
     this._template = document.querySelector('#phone-catalogue-template').innerHTML;
     this._templateFunction = _.template(this._template);
 
     this._el.addEventListener('click', this._onPhoneClick.bind(this));
 
-    this._render(this._getPhones());
-  }
-
-  on(eventName, handler) {
-    this._el.addEventListener(eventName, handler);
-  }
-
-  off(eventName, handler) {
-    this._el.removeEventListener(eventName, handler);
-  }
-
-  trigger(eventName, data) {
-    var myEvent = new CustomEvent(eventName, {
-      detail: data
-    });
-
-    this._el.dispatchEvent(myEvent);
+    this._loadPhones();
   }
 
   _onPhoneClick(event) {
@@ -197,15 +183,18 @@ class PhoneCatalogue {
     this.trigger('phoneSelected', selectedPhoneId);
   }
 
-  _render(phones) {
+  _render() {
     let html = this._templateFunction({
-      phones: phones
+      phones: this._phones
     });
 
     this._el.innerHTML = html;
   }
 
-  _getPhones() {
-    return phonesFromServer;
+  _loadPhones() {
+    HttpService.getJSON(`/data/phones/phones.json`, (phones) => {
+      this._phones = phones;
+      this._render();
+    });
   }
 }
