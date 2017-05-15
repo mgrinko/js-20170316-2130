@@ -5,19 +5,17 @@ var file = new static.Server('.', {
 });
 
 function accept(request, response) {
-  file.serve(request, response);
 
+  if (request.url.indexOf('/data/') === 0) {
 
-  // if (request.url.indexOf('/data/') === 0) {
-  //
-  //   setTimeout(() => {
-  //     file.serve(request, response);
-  //   }, 3000);
-  //
-  // } else {
-  //   request.url = '/public' + request.url;
-  //   file.serve(request, response);
-  // }
+    setTimeout(() => {
+      file.serve(request, response);
+    }, 3000);
+
+  } else {
+    request.url = '/public' + request.url;
+    file.serve(request, response);
+  }
 }
 
 http.createServer(accept).listen(3000);
