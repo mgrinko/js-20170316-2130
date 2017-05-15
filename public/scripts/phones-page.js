@@ -23,6 +23,17 @@ class PhonesPage {
       this._viewer.showPhone(phoneDetails);
       this._catalogue.hide();
     });
+
+    this._viewer.on('back', () => {
+      this._viewer.hide();
+      this._catalogue.show();
+    });
+
+    this._viewer.on('add', (event) => {
+      let phoneDetails = event.detail;
+
+      this._cart.addItem(phoneDetails);
+    });
   }
 
   _getPhoneDetails(phoneId) {
